@@ -1,9 +1,10 @@
-let activeEffect = null;
+// TODO: Remove logs
+let activeEffect: ReactiveEff | null = null;
 
 class ReactiveEff {
   private fn: () => any;
-  private deps: Set<ReactiveEff>;
-  private active: boolean;
+  public deps: Set<ReactiveEff>;
+  public active: boolean;
   constructor(fn: () => any) {
     this.fn = fn;
     this.deps = new Set();
@@ -30,7 +31,7 @@ class ReactiveEff {
 /**
  * Create a reactive effect
  * @param fn The function to execute when the effect is triggered
- * @returns 
+ * @returns
  */
 export const effect = (fn: () => any) => {
   const reactiveEff = new ReactiveEff(fn);
@@ -38,18 +39,50 @@ export const effect = (fn: () => any) => {
   return reactiveEff;
 };
 
-const targetMap = new WeakMap();
+const targetMap = new WeakMap<Map<string, Set<ReactiveEff>>>();
 
 /**
  * Collect reactive object deps
  * @param target The reactive object
  * @param key The property of the reactive object
  */
-const track = (target: any, key: string) => {};
+export const track = (target: any, key: string) => {
+  if (!activeEffect || !activeEffect.active) {
+    return;
+  }
+  let depsMap = targetMap.get(target);
+  if (!depsMap) {
+    depsMap = new Map();
+    targetMap.set(target, depsMap);
+  }
+  let dep = depsMap.get(key);
+  if (!dep) {
+    dep = new Set<ReactiveEff>();
+    depsMap.set(key, dep);
+  }
+  console.log('dep', dep);
+  console.log('activeEffect', activeEffect);
+  if (!dep.has(activeEffect)) {
+    dep.add(activeEffect);
+    activeEffect.deps.add(dep);
+  }
+};
 
 /**
  * Re-run effects that depend on the reactive object
  * @param target The reactive object
  * @param key The property of the reactive object
  */
-const trigger = (target: any, key: string) => {};
+export const trigger = (target: any, key: string) => {
+  let depsMap = targetMap.get(target);
+  if (!depsMap) {
+    return;
+  }
+  console.log('depsMap', depsMap);
+  let dep = depsMap.get(key);
+  if (!dep) {
+    return;
+  }
+  console.log('dep', dep);
+  dep.forEach((ef: ReactiveEff) => ef.start());
+};
