@@ -1,11 +1,11 @@
 /**
  * @fileoverview Provides the core reactive effect system for the vistavia reactivity system.
- * 
+ *
  * Defines the core primitives used for dependency tracking and reactivity:
  * - `effect()` for reactive effects
- * 
+ *
  * The design follows a dependency graph model inspired by Vue 3’s reactivity system.
- * 
+ *
  * @author Khaled
  * @created 2025-10-15
  */
@@ -13,8 +13,8 @@
 // TODO: Remove logs
 let activeEffect: ReactiveEff | null = null;
 
-class ReactiveEff {
-  private fn: () => any;
+export class ReactiveEff {
+  public fn: () => any;
   public deps: Set<ReactiveEff>;
   public active: boolean;
   constructor(fn: () => any) {
@@ -72,8 +72,8 @@ export const track = (target: any, key: string) => {
     dep = new Set<ReactiveEff>();
     depsMap.set(key, dep);
   }
-  console.log('dep', dep);
-  console.log('activeEffect', activeEffect);
+  // console.log('dep', dep);
+  // console.log('activeEffect', activeEffect);
   if (!dep.has(activeEffect)) {
     dep.add(activeEffect);
     activeEffect.deps.add(dep);
@@ -90,11 +90,11 @@ export const trigger = (target: any, key: string) => {
   if (!depsMap) {
     return;
   }
-  console.log('depsMap', depsMap);
+  // console.log('depsMap', depsMap);
   let dep = depsMap.get(key);
   if (!dep) {
     return;
   }
-  console.log('dep', dep);
+  // console.log('dep', dep);
   dep.forEach((ef: ReactiveEff) => ef.start());
 };
