@@ -1,4 +1,4 @@
-import { calc, via, } from '../index.ts' 
+import { calc, via } from '../index.ts' 
 
 const count = via(4);
 const doubleCount = calc(() => count.v * 2);
