@@ -11,21 +11,25 @@
  */
 
 
-import { track, trigger } from "./effect";
+import { track, trigger } from "./effect.ts";
 
 class ViaImpl<T> {
-  _v: T;
+  private _v: T;
   constructor(_v: T) {
     this._v = _v;
   }
-  get value() {
+  get v() {
     track(this, "_v");
     return this._v;
   }
-  set value(_v: T) {
+  set v(_v: T) {
     if (_v === this._v) return;
     this._v = _v;
     trigger(this, "_v");
+  }
+
+  public valueOf() {
+    return this._v;
   }
 }
 
