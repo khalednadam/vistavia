@@ -1,3 +1,15 @@
+/**
+ * @fileoverview Provides the core reactive effect system for the vistavia reactivity system.
+ * 
+ * Defines the core primitives used for dependency tracking and reactivity:
+ * - `effect()` for reactive effects
+ * 
+ * The design follows a dependency graph model inspired by Vue 3’s reactivity system.
+ * 
+ * @author Khaled
+ * @created 2025-10-15
+ */
+
 // TODO: Remove logs
 let activeEffect: ReactiveEff | null = null;
 
