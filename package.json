@@ -6,9 +6,12 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "play": "node --import ts-node/register src/playground/main.ts"
   },
   "devDependencies": {
+    "ts-node": "^10.9.2",
+    "tsx": "^4.20.6",
     "typescript": "~5.9.3",
     "vite": "^7.1.7"
   }
