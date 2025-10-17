@@ -3,7 +3,7 @@
  * 
  * The calc function is a wrapper around the via function that allows for reactive calculations.
  * 
- * @author Khaled
+ * @author Khaled Nadam
  * @created 2025-10-16
  */
 

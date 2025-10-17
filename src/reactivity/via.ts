@@ -6,7 +6,7 @@
  * 
  * The design follows a dependency graph model inspired by Vue 3’s reactivity system.
  * 
- * @author Khaled
+ * @author Khaled Nadam
  * @created 2025-10-16
  */
 
