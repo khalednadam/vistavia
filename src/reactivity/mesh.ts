@@ -13,7 +13,6 @@ export const mesh = <T extends object>(target: T): T => {
     get(target, key, receiver) {
       const value = Reflect.get(target, key, receiver);
       track(target, key as string);
-      // Only wrap objects with mesh, return primitives as-is
       return (value && typeof value === 'object') ? mesh(value) : value;
     },
 
